@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+
+{% block main %}
+<head>
+    <script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <script src="https://code.highcharts.com/highcharts-more.js"></script>
+
+</head>
+<body>
+    <div id="ticker">Rolling ticker with current top 10 movers</div>
+
+    <div class="maincontainer">
+        <div id="leftbar">
+            {% if current_stock %}
+                <h2> {{ current_stock.name }} </h2>
+                <p><a href="{% url 'ftsefinance:plot' current_stock.ticker %}">
+                    {{ current_stock.ticker }}</a>
+                {% if current_stock.change >= 0 %}
+                    <span class="positive">{{ current_stock.change }}</span><br>
+                {% else %}
+                    <span class="negative">{{ current_stock.change }}</span><br>
+                {% endif %}</p>
+            {% else %}
+                Error: No stock data found
+            {% endif %}
+        </div>
+
+        <div id="centerframe">
+            <div id="graph-container">
+                <script>
+                $(function () {
+                    $('#graph-container').highcharts({
+                        chart: {
+                            type: 'line',
+                            zoomType: 'x',
+                            marginRight: 20
+                        },
+                        title: {
+                            text: "{{ current_stock.name }}"
+                        },
+                        tooltip: {
+                            shared: true
+                        },
+                        xAxis: {
+                            type: "datetime",
+                            "labels": {
+                                "format": "{value:%d/%m/%Y}"
+                            },
+                            tickPixelInterval: 40,
+                            startOnTick: true,
+                            endOnTick: true
+                        },
+                        plotOptions: {
+                            line: {
+                                marker: {
+                                    enabled: false
+                                }
+                            }
+                        },
+                        series: [{
+                            name: 'close price',
+                            color: 'black',
+                            data: {{ close_price }}
+                        }, {
+                            name: 'max price',
+                            color: 'green',
+                            data: {{ max_price }}
+                        }, {
+                            name: 'min price',
+                            color: 'red',
+                            data: {{ min_price }}
+                        }]
+                    });
+                });
+                </script>
+            </div>
+            <div id="graph-bar">
+                <form action="{% url 'ftsefinance:plot' current_stock.ticker %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" value="14,0,0" name="start">2 weeks</button>
+                    <button type="submit" value="0,1,0" name="start">1 month</button>
+                    <button type="submit" value="0,3,0" name="start">3 months</button>
+                    <button type="submit" value="0,6,0" name="start">6 months</button>
+                    <button type="submit" value="0,0,1" name="start">1 year</button>
+                    <button type="submit" value="0,0,5" name="start">5 year</button>
+                    <script>
+                        $(function() {
+                             $( "#calendar" ).datepicker();
+                        });
+                    </script>
+
+                    <p>Calendar: <input type="text" id="calender" name="calender"/></p>
+                    <input type="submit"/>
+                </form>
+            </div>
+        </div>
+        <div id="news">
+            <h3>New updates </h3>
+                <ul id="newsticker">
+                    {% if recentnews %}
+                        {% for article in recentnews %}
+                        <li>
+                            <a href="{{ article.link }}" target=_blank>
+                            <span>{{ article.title }}</span>
+                            <p>{{ article.abstract|slice:":159" }} ...
+                            </a>
+                        </li>
+                        {% endfor %}
+                    {% else %}
+                        <p> No news found </p>
+                    {% endif %}
+                </ul>
+            </div>
+    </div>
+</body>
+{% endblock %}

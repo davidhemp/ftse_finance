@@ -1,0 +1,32 @@
+{% load staticfiles %}
+<head>
+    <link rel="stylesheet" type="text/css" href="{% static 'main/status.css' %}" />
+</head>
+<body>
+    <div class="container">
+        <div id="logobar"><h3> FTSE Finance </h3></div>
+        <ul>
+            <li>100 Stocks in database?
+                {% if number_of_stocks %}
+                    <span class="{{ number_of_stocks.0 }}">
+                        {{ number_of_stocks.0 }},
+                        {{ number_of_stocks.1 }} Found</span>
+                {% endif %}
+            </li>
+            <li>All stocks up to date?
+                {% if stocks_up_to_date %}
+                    <span class="{{ stocks_up_to_date.0 }}">
+                        {{ stocks_up_to_date.0 }},
+                        {{ stocks_up_to_date.1 }}</span>
+                {% endif %}
+            </li>
+            <li>New article published this week?
+                {% if news_recently_updated %}
+                    <span class="{{ news_recently_updated.0 }}">
+                        {{ news_recently_updated.0 }},
+                        {{ news_recently_updated.1 }}</span>
+                {% endif %}
+            </li>
+        </ul>
+    </div>
+</body>

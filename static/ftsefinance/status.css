@@ -1,0 +1,37 @@
+body {
+  background: white;
+}
+
+#logobar {
+  margin: auto;
+  height: 300px;
+  width: 1210px;
+  background: lightgray url("images/drawn_skyline.png") no-repeat center;
+}
+
+#logobar h3{
+  text-align: right;
+  padding-right: 100px;
+  font-size: 50;
+}
+
+.container {
+    font-size: 18px;
+    margin:auto;
+    text-align: left;
+    background-color: gray;
+    width: 1210px;
+    height: 547px;
+}
+
+.container p{
+    margin-left: 20px;
+}
+
+.Fail{
+    color: #FF0000;
+}
+
+.Pass{
+    color: green;
+}

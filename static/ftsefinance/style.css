@@ -1,0 +1,120 @@
+body {
+  /*background: white url("images/background.jpg") no-repeat right bottom;*/
+  background: gray;
+}
+
+li a {
+  color: blue;
+}
+
+#logobar {
+  margin: auto;
+  height: 300px;
+  width: 1210px;
+  background: lightgray url("/static/ftsefinance/images/drawn_skyline.png") no-repeat center;
+}
+
+#logobar h3{
+  text-align: right;
+  padding-right: 100px;
+  font-size: 50;
+}
+
+#ticker {
+  vertical-align: middle;
+  margin: auto;
+  text-align: center;
+  background: #FFFFFF;
+  line-height: 50px;
+  height: 50px;
+  width: 1210px;
+  border: 1px black solid;
+}
+
+.maincontainer {
+    font-size: 0;
+    margin:auto;
+    text-align: center;
+    background-color: red;
+    width: 1210px;
+    height: 590px;
+}
+
+ul li {
+  text-align: left;
+}
+
+#leftbar {
+    text-align: left;
+    font-size: 14;
+    vertical-align: top;
+    margin: auto;
+    background: light;
+    width:250px;
+    display: inline-block;
+    padding: 0px;
+    height: inherit;
+}
+
+#leftbar p{
+    padding-left: 20px;
+}
+.negative{
+    color: red;
+}
+.positive{
+    color: green;
+}
+#leftbar h2, h3{
+    text-align: center;
+}
+
+#centerframe{
+    ont-size: 14;
+    vertical-align: top;
+    margin: auto;
+    text-align: center;
+    background: #FFFFFF;
+    border: 0px;
+    width: 700px;
+    height: inherit;
+    display: inline-block;
+    padding: 0px;
+}
+
+#graph-container {
+    width: inherit;
+    height: 85%;
+}
+
+#news {
+    font-size: 14;
+    vertical-align: top;
+    margin: auto;
+    display: inline-block;
+    background: lightgray;
+    width: 260px;
+}
+
+ul#newsticker {
+    width: 220px;
+    height: inherit;
+    overflow: hidden;
+}
+
+ul#newsticker  li {
+    width: 200px;
+    height: 100px;
+    padding: 10px;
+}
+
+ul#newsticker li a {
+    text-decoration: none;
+    color: #06C;
+}
+
+ul#newsticker li span {
+    text-decoration: underline;
+    display: block;
+    color: #000;
+}

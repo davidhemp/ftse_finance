@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block main %}
+<head>
+
+</head>
+<body>
+    <div id="ticker">Rolling ticker with current top 10 movers</div>
+
+    <div class="maincontainer">
+        <div id="leftbar">
+            <h2> FTSE 100 </h2>
+            {% if FTSEData %}
+                <p><a href="{% url 'ftsefinance:plot' FTSEData.ticker %}">{{ FTSEData.ticker }}</a>
+                {% if stock.change >= 0 %}
+                    <span class="positive">+{{ FTSEData.change }}</span><br>
+                {% else %}
+                    <span class="negative">{{ FTSEData.change }}</span><br>
+                {% endif %}</p>
+            {% else %}
+                Error: No FTSE data
+            {% endif %}
+            <h3> Yesterdays biggest movers </h3>
+            <p>
+            {% if stock_gainers %}
+                {% for stock in stock_gainers %}
+                    <a href="{% url 'ftsefinance:plot' stock.ticker %}">{{ stock.ticker }}</a>
+                    {% if stock.change >= 0 %}
+                        <span class="positive">+{{ stock.change }}</span><br>
+                    {% else %}
+                        <span class="negative">{{ stock.change }}</span><br>
+                    {% endif %}
+                {% endfor %}
+            {% else %}
+                Error: No gainers loaded
+            {% endif %}
+            <br>
+            {% if stock_lossers %}
+                {% for stock in stock_lossers %}
+                    <a href="{% url 'ftsefinance:plot' stock.ticker %}">{{ stock.ticker }}</a>
+                    {% if stock.change >= 0 %}
+                        <span class="positive">+{{ stock.change }}</span><br>
+                    {% else %}
+                        <span class="negative">{{ stock.change }}</span><br>
+                    {% endif %}
+                {% endfor %}
+            {% else %}
+                Error: No lossers loaded
+            {% endif %}
+            </p>
+            <!--
+            {% if available_stocks %}
+                <ul>
+                {% for stock in available_stocks %}
+                    <li><a href="/{{ stock.ticker }}/">{{ stock.name }}</a></li>
+                {% endfor %}
+                </ul>
+            {% else %}
+                <p>No stocks are available. Website might be down</p>
+            {% endif %}
+            -->
+        </div>
+        <div id="centerframe">
+            <div id="graph-container">
+                Current graph
+            </div>
+        </div>
+        <div id="news">
+            <h3>New updates </h3>
+                <ul id="newsticker">
+                    {% if recentnews %}
+                        {% for article in recentnews %}
+                        <li>
+                            <a href="{{ article.link }}" target=_blank>
+                            <span>{{ article.title }}</span>
+                            <p>{{ article.abstract|slice:":120" }} ...
+                            </a>
+                        </li>
+                        {% endfor %}
+                    {% else %}
+                        <p> No news found </p>
+                    {% endif %}
+                </ul>
+            </div>
+    </div>
+</body>
+{% endblock %}
